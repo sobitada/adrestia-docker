@@ -42,6 +42,8 @@ RUN groupadd -r lovelace --gid 1402 && \
 
 USER lovelace
 
+STOPSIGNAL SIGINT
+
 # Documentation
 LABEL maintainer="Kevin Haller <keivn.haller@outofbits.com>"
 LABEL version="${DFILE_VERSION}${NODE_VERSION}"
