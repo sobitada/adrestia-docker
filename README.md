@@ -15,11 +15,17 @@ In order to build the image in this repository, the arguments below have to be s
 | NODE_REPOSITORY | repository from which the source code shall be fetched |
 | NODE_BRANCH | branch of the repository that shall be checked out |
 
-We can build version `1.19.0` of the cardano-node in the original [repository](https://github.com/input-output-hk/cardano-node) with the following command.
+We can build version `1.29.0` of the cardano-node in the original [repository](https://github.com/input-output-hk/cardano-node) with the following command.
 
 ```
-docker build --build-arg NODE_VERSION=1.19.0 --build-arg NODE_BRANCH=master \
+docker build --build-arg NODE_VERSION=1.29.0 --build-arg NODE_BRANCH=master \
   --build-arg NODE_REPOSITORY="https://github.com/input-output-hk/cardano-node" .
+```
+
+This code repository includes also a Makefile to quickly create images from the default IOHK source for `amd64` and `arm64` platform. 
+
+```
+NODE_VERSION=1.29.0 make amd64 arm64 manifest
 ```
 
 ## Running
@@ -27,8 +33,9 @@ docker build --build-arg NODE_VERSION=1.19.0 --build-arg NODE_BRANCH=master \
 The image contains the cardano-node as well as the cardano-cli executable. The default entrypoint points to the cardano-node executable. 
 
 ### Cardano Node
+
 ```
-docker run adalove/cardano-node:1.5-1.19.0 --help
+docker run adalove/cardano-node:1.29.0 --help
 ```
 
 #### Healthcheck
@@ -49,7 +56,7 @@ healthcheck -max-time-since-last-block 5m
 ### Cardano CLI
 
 ```
-docker run --entrypoint "cardano-cli" adalove/cardano-node:1.5-1.19.0 --help
+docker run --entrypoint "cardano-cli" adalove/cardano-node:u1.29.0 --help
 ```
 
 ## Where to store your data?
@@ -69,3 +76,7 @@ The Docker documentation is a good starting point for understanding the differen
 Note that users on host systems with SELinux enabled may see issues with this. The current workaround is to assign the relevant SELinux policy type to the new data directory so that the container will be allowed to access it:
 
 `chcon -Rt svirt_sandbox_file_t /my/own/cardano-node/data`
+
+## Contribution
+
+Feel free to submit tickets and pull requests.
