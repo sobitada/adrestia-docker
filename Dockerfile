@@ -2,11 +2,33 @@
 # --------------------------------------------------------------------------
 FROM blockblu/ubuntu:20.04-ghc AS compiler
 
+WORKDIR /
+
 ARG NODE_REPO
 ARG NODE_BRANCH
 ARG NODE_VERSION
 
-WORKDIR /
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        autoconf \
+        automake \
+        build-essential \
+        ca-certificates \
+        git \
+        libtool \
+        make \
+        pkg-config && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/input-output-hk/libsodium.git && \
+    cd libsodium && \
+    git checkout 66f017f1 --quiet
+
+RUN cd libsodium && \
+    ./autogen.sh && ./configure && \
+    make && make check && make install && \
+    rm -rf ../libsodium
+
 RUN git clone $NODE_REPO cardano-node -b $NODE_BRANCH --recurse-submodules && \
     cd cardano-node && \
     git fetch --all --tags && \

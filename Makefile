@@ -9,8 +9,8 @@ amd64:
 		--build-arg NODE_BRANCH=${NODE_BRANCH} \
 		--no-cache \
 		--pull \
-        -t "adalove/cardano-node:u${NODE_VERSION}_amd64" .
-	docker push "adalove/cardano-node:u${NODE_VERSION}_amd64"
+        -t "blockblu/cardano-node:u${NODE_VERSION}_amd64" .
+	docker push "blockblu/cardano-node:u${NODE_VERSION}_amd64"
 
 arm64:
 	docker build \
@@ -20,13 +20,13 @@ arm64:
 		--build-arg NODE_BRANCH=${NODE_BRANCH} \
 		--no-cache \
 		--pull \
-        -t "adalove/cardano-node:u${NODE_VERSION}_arm64" .
-	docker push "adalove/cardano-node:u${NODE_VERSION}_arm64"
+        -t "blockblu/cardano-node:u${NODE_VERSION}_arm64" .
+	docker push "blockblu/cardano-node:u${NODE_VERSION}_arm64"
 
 manifest:
-	docker manifest create "adalove/cardano-node:u${NODE_VERSION}" \
-		"adalove/cardano-node:u${NODE_VERSION}_amd64" \
-		"adalove/cardano-node:u${NODE_VERSION}_arm64"
-	docker manifest push --purge "adalove/cardano-node:u${NODE_VERSION}"
+	docker manifest create "blockblu/cardano-node:u${NODE_VERSION}" \
+		"blockblu/cardano-node:u${NODE_VERSION}_amd64" \
+		"blockblu/cardano-node:u${NODE_VERSION}_arm64"
+	docker manifest push --purge "blockblu/cardano-node:u${NODE_VERSION}"
 
 all: amd64 arm64 manifest
