@@ -1,6 +1,6 @@
 # Compiler Image
 # --------------------------------------------------------------------------
-FROM adalove/ubuntu:20.04-ghc AS compiler
+FROM blockblu/ubuntu:20.04-ghc AS compiler
 
 ARG NODE_REPO
 ARG NODE_BRANCH
@@ -32,7 +32,7 @@ RUN mkdir -p /binaries/ && \
 
 # Main Image
 # -------------------------------------------------------------------------
-FROM adalove/ubuntu:20.04
+FROM blockblu/ubuntu:20.04
 
 ENV DFILE_VERSION "u"
 
@@ -45,7 +45,7 @@ STOPSIGNAL SIGINT
 
 COPY --from=healthCheckCompiler /binaries/healthcheck /usr/local/bin/
 
-LABEL maintainer="Kevin Haller <keivn.haller@outofbits.com>"
+LABEL maintainer="Kevin Haller <keivn.haller@blockblu.io>"
 LABEL version="${DFILE_VERSION}${NODE_VERSION}"
 LABEL description="Blockchain node for Cardano (implemented in Haskell)."
 

@@ -1,9 +1,8 @@
 # Cardano Node Dockerfile
 
 This repository maintains an unofficial Dockerfile for the [cardano-node](https://github.com/input-output-hk/cardano-node)
-software based on Ubuntu 20.04. It follows the [guide](https://github.com/input-output-hk/cardano-tutorials/blob/master/node-setup/000_install.md)
-by IOHK outlining how to compile the cardano node software on Linux distributions. The Dockerfile for the Ubuntu base images are located in another 
-repository ([outofbits/cardano-base-images](https://github.com/outofbits/cardano-base-images)).
+software based on Ubuntu 20.04. It follows the guide by IOHK outlining how to compile the cardano-node software on Linux 
+distributions. The Dockerfile for the Ubuntu base images are located in another repository ([blockblu-io/cardano-base-container](https://github.com/blockblu-io/cardano-base-container)).
 
 ## Building
 
@@ -35,7 +34,7 @@ The image contains the cardano-node as well as the cardano-cli executable. The d
 ### Cardano Node
 
 ```
-docker run adalove/cardano-node:1.29.0 --help
+docker run blockblu/cardano-node:1.29.0 --help
 ```
 
 #### Healthcheck
@@ -56,7 +55,7 @@ healthcheck -max-time-since-last-block 5m
 ### Cardano CLI
 
 ```
-docker run --entrypoint "cardano-cli" adalove/cardano-node:u1.29.0 --help
+docker run --entrypoint "cardano-cli" blockblu/cardano-node:u1.29.0 --help
 ```
 
 ## Where to store your data?
@@ -71,12 +70,14 @@ The Docker documentation is a good starting point for understanding the differen
 
 1. Create a data directory on a suitable volume on your host system, e.g. `/my/own/cardano-node/data`.
 2. Start your cardano-node container like this, depending on how you have specified the database path: 
-    `docker run -v /my/own/cardano-node/data:/data adalove/cardano-node:tag --database-path /data ...`
+    `docker run -v /my/own/cardano-node/data:/data blockblu/cardano-node:tag --database-path /data ...`
 
 Note that users on host systems with SELinux enabled may see issues with this. The current workaround is to assign the relevant SELinux policy type to the new data directory so that the container will be allowed to access it:
 
 `chcon -Rt svirt_sandbox_file_t /my/own/cardano-node/data`
 
-## Contribution
+## Contributions
 
-Feel free to submit tickets and pull requests.
+Feel free to submit tickets and pull requests. This repository is maintained by:
+
+* [Kevin Haller](mailto:kevin.haller@blockblu.io) (Operator of the [SOBIT](https://staking.outofbits.com/) stake pool)
